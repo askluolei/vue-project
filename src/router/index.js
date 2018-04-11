@@ -5,7 +5,7 @@ import Util from '../libs/util'
 import Cookies from 'js-cookie'
 import { routers, otherRouter, appRouter } from './router'
 import store from '@/store'
-import { getToken } from '@/libs/auth'
+import { getToken, removeToken } from '@/libs/auth'
 import { getUserInfo } from '@/api/login'
 
 Vue.use(Router)
@@ -73,6 +73,8 @@ router.beforeEach((to, from, next) => {
           .catch(error => {
             // 获取失败，则跳转到登录页面
             console.log('error', error)
+            // 删除token，防止死循环
+            removeToken()
             next({
               name: 'login'
             })

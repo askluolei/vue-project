@@ -2,15 +2,6 @@
 import BackendLayout from '@/components/layout/backend/BackendLayout'
 
 // 不作为Main组件的子页面展示的页面单独写，如下
-// export const helloRouter = {
-//   path: '/',
-//   name: 'hello',
-//   title: '测试',
-//   meta: {
-//     title: 'hello - vue'
-//   },
-//   component: () => import('@/components/HelloWorld')
-// }
 
 export const loginRouter = {
   path: '/login',
@@ -62,7 +53,8 @@ export const otherRouter = {
   redirect: '/home',
   component: BackendLayout,
   children: [
-    { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/home/index.vue') }
+    { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/home/index.vue') },
+    { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/index.vue') }
   ]
 }
 
@@ -74,9 +66,35 @@ export const appRouter = [
     name: 'access',
     title: '权限管理',
     component: BackendLayout,
-    roles: ['user'],
     children: [
       { path: 'index', title: '权限管理', name: 'access_index', component: () => import('@/views/access/index.vue') }
+    ]
+  },
+  {
+    path: '/access-test',
+    icon: 'lock-combination',
+    title: '权限测试页',
+    name: 'accesstest',
+    roles: ['admin'],
+    component: BackendLayout,
+    children: [
+      { path: 'index', title: '权限测试页', name: 'accesstest_index', access: 0, component: () => import('@/views/access/test.vue') }
+    ]
+  },
+  {
+    path: '/component',
+    icon: 'social-buffer',
+    name: 'component',
+    title: '组件',
+    component: BackendLayout,
+    children: [
+      {
+        path: 'md-editor',
+        icon: 'pound',
+        name: 'md-editor',
+        title: 'Markdown编辑器',
+        component: () => import('@/views/markdown-editor/index.vue')
+      }
     ]
   },
   {
