@@ -2,6 +2,16 @@
 
 > A Vue.js project
 
+使用 vue-cli 生成的项目 
+然后参考复制以下项目  
+[iview-admin](https://github.com/iview/iview-admin)
+[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
+
+为啥要参考两个项目呢？  
+因为 `iview-admin` 的基础框架感觉更合理 
+`vue-element-admin` 的国际化,api，mock等也灰常不错，就综合两个脚手架，弄一个符合一个后台程序员心中的前端脚手架把
+第一步，就是要看懂里面在干什么，要加上注释  
+
 ## Build Setup
 
 ``` bash
