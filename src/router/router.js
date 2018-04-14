@@ -68,7 +68,7 @@ export const appRouter = [
     title: '权限管理',
     component: BackendLayout,
     children: [
-      { path: 'index', title: '权限管理', name: 'access_index', component: () => import('@/views/access/index.vue') }
+      { path: 'index', title: { i18n: 'route.permission'}, name: 'access_index', component: () => import('@/views/access/index.vue') }
     ]
   },
   {
@@ -79,7 +79,7 @@ export const appRouter = [
     roles: ['admin'],
     component: BackendLayout,
     children: [
-      { path: 'index', title: '权限测试页', name: 'accesstest_index', access: 0, component: () => import('@/views/access/test.vue') }
+      { path: 'index', title: { i18n: 'route.permissionTest'}, name: 'accesstest_index', access: 0, component: () => import('@/views/access/test.vue') }
     ]
   },
   {

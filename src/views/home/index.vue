@@ -7,3 +7,12 @@
       Home
   </div>
 </template>
+
+<script>
+    import LangSelect from '@/components/lang-select'
+    export default {
+        components: {
+            LangSelect
+        }
+    }
+</script>

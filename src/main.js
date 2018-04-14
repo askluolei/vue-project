@@ -3,18 +3,18 @@
 import Vue from 'vue'
 import App from './App'
 
-// vuex
+// 状态管理
 import store from './store'
 
-// router
+// 路由
 import { router } from './router/index'
 import {appRouter} from './router/router'
 
-// IView
+// IView 组件库
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 
-// ElementUI
+// ElementUI 饿了吗组件库
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -24,6 +24,8 @@ import i18n from './locale'
 
 // 全局过滤器
 import * as filters from './libs/filters'
+// svg 图标
+import './icons'
 
 // 模拟数据
 import './mock'
@@ -69,6 +71,7 @@ new Vue({
         tagsList.push(...item.children)
       }
     })
+    // 这里，将菜单栏里面的组件添加的需要追踪标签列表里面
     this.$store.commit('setTagsList', tagsList)
   }
 })

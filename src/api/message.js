@@ -1,5 +1,12 @@
 import request from '@/libs/request'
 
+export function getUnReadMessageCount () {
+  return request({
+    url: '/api/message/unread',
+    method: 'get'
+  })
+}
+
 export function getAllMessage () {
   return request({
     url: '/api/messages',

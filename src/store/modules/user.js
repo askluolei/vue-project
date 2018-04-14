@@ -62,6 +62,9 @@ const user = {
       state.authorities = []
       state.introduction = ''
       state.imageUrl = ''
+      state.company = ''
+      state.department = ''
+      state.cellphone = ''
     }
   }
 }

@@ -25,6 +25,7 @@ Mock.mock(/\/cellphone\/check/, 'post', loginAPI.validateSMScode)
 
 
 // 消息相关
+Mock.mock(/\/api\/message\/unread/, 'get', MessageAPI.getUnreadMessageCount)
 Mock.mock(/\/api\/messages/, 'get', MessageAPI.getAllMessage)
 Mock.mock(/\/api\/message\?\.*/, 'get', MessageAPI.getMessageByState)
 Mock.mock(/\/api\/message\/read\/\d+/, 'put', MessageAPI.markReaded)

@@ -39,6 +39,15 @@ const messages = [
 ]
 
 export default {
+  getUnreadMessageCount: request => {
+    let count = 0
+    messages.forEach(message => {
+      if (message.state === 0) {
+        count++
+      }
+    })
+    return success(count)
+  },
   getAllMessage: request => {
     return success(messages)
   },

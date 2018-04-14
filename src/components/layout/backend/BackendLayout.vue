@@ -35,7 +35,7 @@
                     <lock-screen></lock-screen>
                     <message-tip v-model="mesCount"></message-tip>
                     <!-- <theme-switch></theme-switch> -->
-
+                    <lang-select class="international"></lang-select>
                     <div class="user-dropdown-menu-con">
                         <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
                             <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
@@ -67,12 +67,14 @@
     </div>
 </template>
 <script>
+import { getUnReadMessageCount } from '@/api/message'
 import shrinkableMenu from './shrinkable-menu/ShrinkableMenu'
 import tagsPageOpened from './tags-page-opened'
 import breadcrumbNav from './breadcrumb-nav'
 import fullScreen from './fullscreen'
 import lockScreen from './lockscreen'
 import messageTip from './message-tip'
+import LangSelect from '@/components/lang-select'
 import util from '@/libs/util.js'
 
 export default {
@@ -82,7 +84,8 @@ export default {
     breadcrumbNav,
     fullScreen,
     lockScreen,
-    messageTip
+    messageTip,
+    LangSelect
   },
   data() {
     return {
@@ -127,10 +130,16 @@ export default {
       if (pathArr.length >= 2) {
         this.$store.commit('addOpenSubmenu', pathArr[1].name)
       }
-      let messageCount = 3
-      this.messageCount = messageCount.toString()
+      getUnReadMessageCount()
+        .then(response => {
+          let messageCount = response.data.data
+          this.$store.commit('setMessageCount', messageCount)
+        })
+        .catch(error => {
+          console.log('获取未读消息数量失败')
+          this.$store.commit('setMessageCount', 0)
+        })
       this.checkTag(this.$route.name)
-      this.$store.commit('setMessageCount', 3)
     },
     toggleClick() {
       this.shrink = !this.shrink
