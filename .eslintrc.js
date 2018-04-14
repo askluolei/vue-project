@@ -20,6 +20,9 @@ module.exports = {
     'vue'
   ],
   // add your custom rules here
+  // 0:off 关闭规则
+  // 1: warn 警告
+  // 2: error 错误
   rules: {
     // allow async-await
     'generator-star-spacing': 'off',

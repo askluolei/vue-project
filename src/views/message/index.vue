@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { getAllMessage, markReaded, markDelete, reduceState } from '@/api/message'
 export default {
   name: 'message_index',
   data() {
@@ -48,8 +49,11 @@ export default {
         },
         on: {
           click: () => {
-            this.hasreadMesList.unshift(this.currentMesList.splice(params.index, 1)[0])
-            this.$store.commit('setMessageCount', this.unreadMesList.length)
+            markReaded(params.row.id)
+              .then(response => {
+                this.hasreadMesList.unshift(this.currentMesList.splice(params.index, 1)[0])
+                this.$store.commit('setMessageCount', this.unreadMesList.length)
+              })
           }
         }
       }, '标为已读')
@@ -62,7 +66,10 @@ export default {
         },
         on: {
           click: () => {
-            this.recyclebinList.unshift(this.hasreadMesList.splice(params.index, 1)[0])
+            markDelete(params.row.id)
+              .then(response => {
+                this.recyclebinList.unshift(this.hasreadMesList.splice(params.index, 1)[0])
+              })
           }
         }
       }, '删除')
@@ -74,7 +81,10 @@ export default {
         },
         on: {
           click: () => {
-            this.hasreadMesList.unshift(this.recyclebinList.splice(params.index, 1)[0])
+            reduceState(params.row.id)
+              .then(response => {
+                this.hasreadMesList.unshift(this.recyclebinList.splice(params.index, 1)[0])
+              })
           }
         }
       }, '还原')
@@ -113,7 +123,7 @@ export default {
                   this.showMesTitleList = false
                   this.mes.title = params.row.title
                   this.mes.time = this.formatDate(params.row.time)
-                  this.getContent(params.index)
+                  this.mes.content = params.row.content
                 }
               }
             }, params.row.title)
@@ -198,49 +208,28 @@ export default {
         this.currentMesList = this.recyclebinList
       }
     },
-    getContent(index) {
-      // you can write ajax request here to get message content
-      let mesContent = ''
-      switch (this.currentMessageType + index) {
-        case 'unread0': mesContent = '这是您点击的《欢迎登录iView-admin后台管理系统，来了解他的用途吧》的相关内容。'; break
-        case 'unread1': mesContent = '这是您点击的《使用iView-admin和iView-ui组件库快速搭建你的后台系统吧》的相关内容。'; break
-        case 'unread2': mesContent = '这是您点击的《喜欢iView-admin的话，欢迎到github主页给个star吧》的相关内容。'; break
-        case 'hasread0': mesContent = '这是您点击的《这是一条您已经读过的消息》的相关内容。'; break
-        default: mesContent = '这是您点击的《这是一条被删除的消息》的相关内容。'; break
-      }
-      this.mes.content = mesContent
+    init() {
+      getAllMessage()
+        .then(response => {
+          const data = response.data.data
+          data.forEach(message => {
+            if (message.state === 0) {
+              this.currentMesList.push(message)
+            } else if (message.state === 1) {
+              this.hasreadMesList.push(message)
+            } else {
+              this.recyclebinList.push(message)
+            }
+          })
+          this.unreadMesList = this.currentMesList
+          this.unreadCount = this.unreadMesList.length
+          this.hasreadCount = this.hasreadMesList.length
+          this.recyclebinCount = this.recyclebinList.length
+        })
     }
   },
   mounted() {
-    this.currentMesList = this.unreadMesList = [
-      {
-        title: '欢迎登录iView-admin后台管理系统，来了解他的用途吧',
-        time: 1507390106000
-      },
-      {
-        title: '使用iView-admin和iView-ui组件库快速搭建你的后台系统吧',
-        time: 1507390106000
-      },
-      {
-        title: '喜欢iView-admin的话，欢迎到github主页给个star吧',
-        time: 1507390106000
-      }
-    ]
-    this.hasreadMesList = [
-      {
-        title: '这是一条您已经读过的消息',
-        time: 1507330106000
-      }
-    ]
-    this.recyclebinList = [
-      {
-        title: '这是一条被删除的消息',
-        time: 1506390106000
-      }
-    ]
-    this.unreadCount = this.unreadMesList.length
-    this.hasreadCount = this.hasreadMesList.length
-    this.recyclebinCount = this.recyclebinList.length
+    this.init()
   },
   watch: {
     unreadMesList(arr) {

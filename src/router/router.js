@@ -54,6 +54,7 @@ export const otherRouter = {
   component: BackendLayout,
   children: [
     { path: 'home', title: {i18n: 'home'}, name: 'home_index', component: () => import('@/views/home/index.vue') },
+    { path: 'ownspace', title: '个人中心', name: 'ownspace_index', component: () => import('@/views/own-space/index.vue') },
     { path: 'message', title: '消息中心', name: 'message_index', component: () => import('@/views/message/index.vue') }
   ]
 }
@@ -93,8 +94,15 @@ export const appRouter = [
         icon: 'pound',
         name: 'md-editor',
         title: 'Markdown编辑器',
-        component: () => import('@/views/markdown-editor/index.vue')
-      }
+        component: () => import('@/views/components-demo/markdown.vue')
+      },
+      {
+        path: 'count-to',
+        icon: 'arrow-graph-up-right',
+        name: 'count-to',
+        title: '数字渐变',
+        component: () => import('@/views/components-demo/count-to.vue')
+      },
     ]
   },
   {

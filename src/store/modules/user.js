@@ -7,7 +7,10 @@ const user = {
     roles: [],
     authorities: [],
     introduction: '',
-    imageUrl: ''
+    imageUrl: '',
+    company: '',
+    department: '',
+    cellphone: ''
   },
   mutations: {
     setUserInfo(state, user) {
@@ -17,6 +20,19 @@ const user = {
       state.authorities = user.authorities || []
       state.introduction = user.introduction
       state.imageUrl = user.imageUrl
+      state.company = user.company
+      state.department = user.department
+      state.cellphone = user.cellphone
+    },
+    setNickName(state, nickname) {
+      if (nickname) {
+        state.nickname = nickname
+      }
+    },
+    setCellphone(state, cellphone) {
+      if (cellphone) {
+        state.cellphone = cellphone
+      }
     },
     setRole(state, roles) {
       state.roles = roles || []
